@@ -15,7 +15,8 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install \
     transformers \
-    sentencepiece
+    sentencepiece \
+    pandas
 
 # Install python modules.
 #COPY ./requirements.txt /requirements.txt
