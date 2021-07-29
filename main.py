@@ -9,6 +9,7 @@ from transformers import Trainer
 from transformers import pipeline
 import pandas as pd
 import os
+import torch
 
 def main():
 
@@ -16,14 +17,16 @@ def main():
 
     # 事前学習用コーパスの準備
     # 1行に1文章となるようなテキストを準備する
-    df_header = pd.read_csv('XXX.csv')
-    print(df_header)
+    #df_header = pd.read_csv('XXX.csv')
+    #print(df_header)
 
+    # vocab_sizeの設定
+    vocab_size = 18000
 
     # Tokenization
     # sentencepieceの学習
     SentencePieceTrainer.Train(
-        '--input='+dir+'corpus/corpus.txt, --model_prefix='+dir+'model/sentencepiece --character_coverage=0.9995 --vocab_size=100'
+        '--input='+dir+'/corpus/corpus.txt, --model_prefix='+dir+'/model/sentencepiece --character_coverage=0.9995 --vocab_size='+vocab_size
     )
 
     # sentencepieceのパラメータ
@@ -37,7 +40,7 @@ def main():
     # in combination with unigram. Examples of models using SentencePiece are ALBERT, XLNet, Marian, and T5.
     # https://huggingface.co/transformers/tokenizer_summary.html
     # ALBERTのトークナイザを定義
-    tokenizer = AlbertTokenizer.from_pretrained(dir+'model/sentencepiece.model', keep_accents=True)
+    tokenizer = AlbertTokenizer.from_pretrained(dir+'/model/sentencepiece.model', keep_accents=True)
 
     # textをトークナイズ
     text = ""
@@ -45,7 +48,7 @@ def main():
 
     # BERTモデルのconfigを設定
     # BERTconfigを定義
-    config = BertConfig(vocab_size=32003, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
+    config = BertConfig(vocab_size=vocab_size, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
 
     # BERT MLMのインスタンスを生成
     model = BertForMaskedLM(config)
@@ -56,7 +59,7 @@ def main():
     # textを1行ずつ読み込んでトークンへ変換
     dataset = LineByLineTextDataset(
          tokenizer=tokenizer,
-         file_path=dir + 'corpus/corpus.txt',
+         file_path=dir + '/corpus/corpus.txt',
          block_size=256, # tokenizerのmax_length
     )
 
@@ -69,7 +72,7 @@ def main():
 
     # 事前学習のパラメータを定義
     training_args = TrainingArguments(
-        output_dir= dir + 'outputBERT/',
+        output_dir= dir + '/outputBERT/',
         overwrite_output_dir=True,
         num_train_epochs=10,
         per_device_train_batch_size=32,
@@ -90,11 +93,11 @@ def main():
     trainer.train()
 
     # 学習したモデルの保存
-    trainer.save_model(dir + 'outputBERT/')
+    trainer.save_model(dir + '/outputBERT/')
 
     # tokenizerとmodel
-    tokenizer = AlbertTokenizer.from_pretrained(dir+'model/sentencepiece.model', keep_accents=True)
-    model = BertForMaskedLM.from_pretrained(dir + 'outputBERT')
+    tokenizer = AlbertTokenizer.from_pretrained(dir+'/model/sentencepiece.model', keep_accents=True)
+    model = BertForMaskedLM.from_pretrained(dir + '/outputBERT')
 
     fill_mask = pipeline(
         "fill-mask",
@@ -106,7 +109,7 @@ def main():
 
     # コーパスに応じた文章から穴埋めをとく
 
-    text = "XXX{}XXX".format(MASK_TOKEN)
+    text = "この物語の主人公は、彼《か》のバルカン地方の伝説『吸血鬼』にも比すべき、{}の悪魔である。".format(MASK_TOKEN)
     fill_mask(text)
 
 
