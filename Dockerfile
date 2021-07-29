@@ -32,6 +32,8 @@ RUN apt-get update && \
 RUN echo "alias python=python3" >> $HOME/.bashrc && \
     echo "alias pip=pip3" >> $HOME/.bashrc
 
+
 WORKDIR /work
+
 
 CMD ["/bin/bash"]

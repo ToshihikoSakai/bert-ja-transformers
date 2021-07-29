@@ -8,10 +8,11 @@ from transformers import TrainingArguments
 from transformers import Trainer
 from transformers import pipeline
 import pandas as pd
+import os
 
 def main():
 
-    dir = ""
+    dir = os.getcwd()
 
     # 事前学習用コーパスの準備
     # 1行に1文章となるようなテキストを準備する
@@ -68,7 +69,7 @@ def main():
 
     # 事前学習のパラメータを定義
     training_args = TrainingArguments(
-        output_dir= drive_dir + 'outputBERT/',
+        output_dir= dir + 'outputBERT/',
         overwrite_output_dir=True,
         num_train_epochs=10,
         per_device_train_batch_size=32,
@@ -92,8 +93,8 @@ def main():
     trainer.save_model(dir + 'outputBERT/')
 
     # tokenizerとmodel
-    tokenizer = AlbertTokenizer.from_pretrained(drive_dir+'model/sentencepiece.model', keep_accents=True)
-    model = BertForMaskedLM.from_pretrained(drive_dir + 'outputBERT')
+    tokenizer = AlbertTokenizer.from_pretrained(dir+'model/sentencepiece.model', keep_accents=True)
+    model = BertForMaskedLM.from_pretrained(dir + 'outputBERT')
 
     fill_mask = pipeline(
         "fill-mask",
