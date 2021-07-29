@@ -26,7 +26,7 @@ def main():
     # Tokenization
     # sentencepieceの学習
     SentencePieceTrainer.Train(
-        '--input='+dir+'/corpus/corpus.txt, --model_prefix='+dir+'/model/sentencepiece --character_coverage=0.9995 --vocab_size='+vocab_size
+        '--input='+dir+'/corpus/corpus.txt, --model_prefix='+dir+'/model/sentencepiece --character_coverage=0.9995 --vocab_size={}'.format(vocab_size)
     )
 
     # sentencepieceのパラメータ
@@ -42,16 +42,20 @@ def main():
     # ALBERTのトークナイザを定義
     tokenizer = AlbertTokenizer.from_pretrained(dir+'/model/sentencepiece.model', keep_accents=True)
 
+    print(tokenizer)
     # textをトークナイズ
-    text = ""
-    print(tokenizer.tokenize(text))
+    #text = ""
+    #print(tokenizer.tokenize(text))
 
     # BERTモデルのconfigを設定
     # BERTconfigを定義
-    config = BertConfig(vocab_size=vocab_size, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
+    # vocab_sizeはspecial_tokensの数を加算する必要がある
+    config = BertConfig(vocab_size=18007, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
 
     # BERT MLMのインスタンスを生成
     model = BertForMaskedLM(config)
+
+    print(model)
 
     # パラメータ数を表示
     print('No of parameters: ', model.num_parameters())
@@ -75,7 +79,7 @@ def main():
         output_dir= dir + '/outputBERT/',
         overwrite_output_dir=True,
         num_train_epochs=10,
-        per_device_train_batch_size=32,
+        per_device_train_batch_size=8,
         save_steps=10000,
         save_total_limit=2,
         prediction_loss_only=True
