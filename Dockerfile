@@ -12,8 +12,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install --upgrade pip
 
-# Set requirements
-RUN pip install -r requirements.txt
+# Install python modules
+COPY ./requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
 
 # Set Japanese environment
 RUN apt-get update && \
