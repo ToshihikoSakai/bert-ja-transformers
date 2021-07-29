@@ -11,16 +11,9 @@ RUN apt-get update && apt-get install -y \
     git
 
 RUN pip3 install --upgrade pip
-#RUN pip3 install torch
 
-#RUN pip3 install \
-#    transformers \
-#    sentencepiece \
-#    pandas
-
-# Install python modules.
-#COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+# Set requirements
+RUN pip install -r requirements.txt
 
 # Set Japanese environment
 RUN apt-get update && \
