@@ -1,6 +1,6 @@
 #FROM ubuntu:18.04
-FROM python-gpu
-#FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04 
+#FROM python-gpu
+FROM nvidia/cuda
 LABEL maintainer="toshiwork5630@gmail.com"
 LABEL version="1.0"
 
