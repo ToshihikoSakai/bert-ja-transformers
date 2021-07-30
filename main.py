@@ -13,6 +13,12 @@ import torch
 
 def main():
 
+    cuda_yes = torch.cuda.is_available()
+    print('Cuda is available?', cuda_yes)
+    device = torch.device("cuda:0" if cuda_yes else "cpu")
+    print('Device:', device)
+
+
     dir = os.getcwd()
 
     # 事前学習用コーパスの準備
@@ -54,7 +60,8 @@ def main():
 
     # BERT MLMのインスタンスを生成
     model = BertForMaskedLM(config)
-
+    model.to(device)
+    
     print(model)
 
     # パラメータ数を表示
