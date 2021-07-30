@@ -61,7 +61,7 @@ def main():
     # BERT MLMのインスタンスを生成
     model = BertForMaskedLM(config)
     model.to(device)
-    
+
     print(model)
 
     # パラメータ数を表示
@@ -86,7 +86,7 @@ def main():
         output_dir= dir + '/outputBERT/',
         overwrite_output_dir=True,
         num_train_epochs=10,
-        per_device_train_batch_size=8,
+        per_device_train_batch_size=32,
         save_steps=10000,
         save_total_limit=2,
         prediction_loss_only=True
