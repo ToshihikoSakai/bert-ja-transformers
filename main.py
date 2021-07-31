@@ -106,22 +106,7 @@ def main():
     # 学習したモデルの保存
     trainer.save_model(dir + '/outputBERT/')
 
-    # tokenizerとmodel
-    tokenizer = AlbertTokenizer.from_pretrained(dir+'/model/sentencepiece.model', keep_accents=True)
-    model = BertForMaskedLM.from_pretrained(dir + '/outputBERT')
 
-    fill_mask = pipeline(
-        "fill-mask",
-        model=model,
-        tokenizer=tokenizer
-    )
-
-    MASK_TOKEN = tokenizer.mask_token
-
-    # コーパスに応じた文章から穴埋めをとく
-
-    text = "この物語の主人公は、彼《か》のバルカン地方の伝説『吸血鬼』にも比すべき、{}の悪魔である。".format(MASK_TOKEN)
-    fill_mask(text)
 
 
 
