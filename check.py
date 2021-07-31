@@ -23,8 +23,8 @@ def main():
 
     # コーパスに応じた文章から穴埋めをとく
 
-    text = "この物語の主人公は、彼《か》のバルカン地方の伝説『吸血鬼』にも比すべき、{}の悪魔である。".format(MASK_TOKEN)
-    fill_mask(text)
+    text = "この物語の主人公は、彼《か》のバルカン地方の伝説{}にも比すべき、悪魔である。".format(MASK_TOKEN)
+    print(fill_mask(text))
 
 
 if __name__ == '__main__':
