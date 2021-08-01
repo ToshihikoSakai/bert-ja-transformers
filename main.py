@@ -71,7 +71,11 @@ def main():
     dataset = LineByLineTextDataset(
          tokenizer=tokenizer,
          file_path=dir + '/corpus/corpus.txt',
-         block_size=256, # tokenizerのmax_length
+         block_size=512, # tokenizerのmax_length
+         # block_sizeはtokenizerのmax_lengthっぽい
+         #https://github.com/huggingface/transformers/blob/master/src/transformers/data/datasets/language_modeling.py#L114
+
+
     )
 
     # データセットからサンプルのリストを受け取り、それらをテンソルの辞書としてバッチに照合するための関数
