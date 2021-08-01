@@ -27,7 +27,7 @@ def main():
     #print(df_header)
 
     # vocab_sizeの設定
-    vocab_size = 18000
+    vocab_size = 32000
 
     # Tokenization
     # sentencepieceの学習
@@ -56,7 +56,7 @@ def main():
     # BERTモデルのconfigを設定
     # BERTconfigを定義
     # vocab_sizeはspecial_tokensの数を加算する必要がある
-    config = BertConfig(vocab_size=18007, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
+    config = BertConfig(vocab_size=32007, num_hidden_layers=12, intermediate_size=768, num_attention_heads=12)
 
     # BERT MLMのインスタンスを生成
     model = BertForMaskedLM(config)
@@ -91,9 +91,12 @@ def main():
         overwrite_output_dir=True,
         num_train_epochs=10,
         per_device_train_batch_size=32,
-        save_steps=10000,
+        save_steps=2000,
         save_total_limit=2,
-        prediction_loss_only=True
+        prediction_loss_only=True,
+        eval_steps=2000,
+        logging_steps=2000,
+        evaluation_strategy="steps" #step毎に評価(evals_step)
     )
 
     # trainerインスタンスの生成
