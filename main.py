@@ -94,7 +94,6 @@ def main():
         save_steps=2000,
         save_total_limit=2,
         prediction_loss_only=True,
-        eval_steps=2000,
         logging_steps=2000,
         evaluation_strategy="steps" #step毎に評価(evals_step)
     )
