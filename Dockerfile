@@ -22,6 +22,9 @@ RUN apt-get update && \
     locale-gen ja_JP.UTF-8 && \
     echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc
 
+# Set GPU:0 device
+RUN echo "export CUDA_VISIBLE_DEVICES=\"0\""
+
 # Set alias for python3
 RUN echo "alias python=python3" >> $HOME/.bashrc && \
     echo "alias pip=pip3" >> $HOME/.bashrc
