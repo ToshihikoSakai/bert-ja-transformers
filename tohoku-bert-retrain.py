@@ -54,6 +54,8 @@ def main():
 
     )
 
+    print('No. of lines: ', len(dataset))
+
     # データセットからサンプルのリストを受け取り、それらをテンソルの辞書としてバッチに照合するための関数
     data_collator = DataCollatorForLanguageModeling(
         tokenizer=tokenizer, 
