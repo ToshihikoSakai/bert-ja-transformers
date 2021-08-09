@@ -1,5 +1,5 @@
 from transformers import BertConfig
-from transformers import BertJapaneseTokenizer
+from transformers import BertJapaneseTokenizer, BertModel
 from transformers import BertForMaskedLM
 from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
