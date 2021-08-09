@@ -2,3 +2,4 @@ transformers
 sentencepiece 
 pandas
 torch
+fugashi
