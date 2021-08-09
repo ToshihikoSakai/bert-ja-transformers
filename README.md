@@ -12,9 +12,9 @@ docker build -t bert-ja-transformers .
 1行に1文のテキストを用意する
 
 # フルスクラッチからの事前学習
-トークン化： sentencepiece
-tokenizer: ALBERT(sentencepieceに対応)
-model: BertForMaskedLM
+- トークン化： sentencepiece
+- tokenizer: ALBERT(sentencepieceに対応)
+- model: BertForMaskedLM
 
 ```sh
 docker run -it --rm -v $PWD:/work -p 8888:8888 bert-ja-transformers
@@ -22,8 +22,8 @@ python main.py
 ```
 
 # 事前学習モデルからさらに任意のコーパスで再事前学習
-トークン化/tokenizer： Mecab + wordpiece(事前学習モデルに準ずる)
-model: BertForMaskedLM
+- トークン化/tokenizer： Mecab + wordpiece(事前学習モデルに準ずる)
+- model: BertForMaskedLM
 ```sh
 docker run -it --rm -v $PWD:/work -p 8888:8888 bert-ja-transformers
 python tohoku-bert-retrain.py
