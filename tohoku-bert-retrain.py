@@ -34,10 +34,8 @@ def main():
     #print(tokenizer.tokenize(text))
 
     # BERTモデル
-    model = BertModel.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
-
     # BERT MLMのインスタンスを生成
-    #model = BertForMaskedLM(config)
+    model = BertForMaskedLM.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
     model.to(device)
 
     print(model)
