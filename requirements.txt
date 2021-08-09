@@ -3,3 +3,4 @@ sentencepiece
 pandas
 torch
 fugashi
+ipadic
