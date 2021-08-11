@@ -9,8 +9,10 @@ from transformers import pipeline
 import pandas as pd
 import os
 import torch
+import time
 
 def main():
+    start = time.time()
 
     cuda_yes = torch.cuda.is_available()
     print('Cuda is available?', cuda_yes)
@@ -89,7 +91,11 @@ def main():
     # 学習したモデルの保存
     trainer.save_model(dir + '/outputBERT/')
 
-
+    #かかった時間を出力
+    elapsed_time = time.time() - start
+    print("elapsed_time={}".format(elapsed_time))
+    with open('/outputBERT/elapsed_time.txt',mode='w') as f:
+        f.write("elapsed_time={}".format(elapsed_time))
 
 
 
