@@ -10,9 +10,11 @@ import pandas as pd
 import os
 import torch
 import time
+import sys
 
 def main():
     start = time.time()
+    args = sys.argv
 
     cuda_yes = torch.cuda.is_available()
     print('Cuda is available?', cuda_yes)
@@ -21,6 +23,12 @@ def main():
 
 
     dir = os.getcwd()
+
+    corpus = args[1]
+    # 絶対パスで記載
+
+    outputdir = args[2]
+    # 絶対パスで記載
 
     # 事前学習用コーパスの準備
     # 1行に1文章となるようなテキストを準備する
@@ -48,7 +56,7 @@ def main():
     # textを1行ずつ読み込んでトークンへ変換
     dataset = LineByLineTextDataset(
          tokenizer=tokenizer,
-         file_path=dir + '/corpus/corpus.txt',
+         file_path=corpus,
          block_size=512, # tokenizerのmax_length
          # block_sizeはtokenizerのmax_lengthっぽい
          #https://github.com/huggingface/transformers/blob/master/src/transformers/data/datasets/language_modeling.py#L114
@@ -67,7 +75,7 @@ def main():
 
     # 事前学習のパラメータを定義
     training_args = TrainingArguments(
-        output_dir= dir + '/outputBERT/',
+        output_dir= outputdir,
         overwrite_output_dir=True,
         num_train_epochs=10,
         per_device_train_batch_size=32,
@@ -89,12 +97,12 @@ def main():
     trainer.train()
 
     # 学習したモデルの保存
-    trainer.save_model(dir + '/outputBERT/')
+    trainer.save_model(outputdir)
 
     #かかった時間を出力
     elapsed_time = time.time() - start
     print("elapsed_time={}".format(elapsed_time))
-    with open('/outputBERT/elapsed_time.txt',mode='w') as f:
+    with open('./elapsed_time.txt',mode='w') as f:
         f.write("elapsed_time={}".format(elapsed_time))
 
 
