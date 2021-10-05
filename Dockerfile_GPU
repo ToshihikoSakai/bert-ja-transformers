@@ -1,5 +1,4 @@
-FROM ubuntu:18.04
-#FROM nvidia/cuda
+FROM nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04
 
 RUN apt-get update && apt-get install -y \
     python3 \
@@ -26,8 +25,8 @@ ENV CUDA_VISIBLE_DEVICES 0
 RUN echo "alias python=python3" >> $HOME/.bashrc && \
     echo "alias pip=pip3" >> $HOME/.bashrc
 
-# pytorch install(CPU)
-RUN pip3 install torch==1.9.1+cpu torchvision==0.10.1+cpu torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+# pytorch install(GPU,CUDA11.1)
+pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
 
 RUN pip3 install pytorch_pretrained_bert
 
