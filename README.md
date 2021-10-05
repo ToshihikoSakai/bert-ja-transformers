@@ -11,6 +11,7 @@ docker build -t bert-ja-transformers .
 # 事前学習を行うコーパスを用意する
 1行に1文のテキストを用意する
 
+
 # フルスクラッチからの事前学習
 - トークン化： sentencepiece
 - tokenizer: ALBERT(sentencepieceに対応)
@@ -26,7 +27,7 @@ python main.py
 - model: BertForMaskedLM
 ```sh
 docker run -it --rm -v $PWD:/work -p 8888:8888 bert-ja-transformers
-python tohoku-bert-retrain.py
+python tohoku-bert-retrain.py /work/corpus/corpus.txt /work/outputBERT/
 ```
 
 
