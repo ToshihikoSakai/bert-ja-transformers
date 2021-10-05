@@ -1,8 +1,5 @@
-#FROM ubuntu:18.04
-#FROM python-gpu
-FROM nvidia/cuda
-LABEL maintainer="toshiwork5630@gmail.com"
-LABEL version="1.0"
+FROM ubuntu:18.04
+#FROM nvidia/cuda
 
 RUN apt-get update && apt-get install -y \
     python3 \
@@ -29,6 +26,10 @@ ENV CUDA_VISIBLE_DEVICES 0
 RUN echo "alias python=python3" >> $HOME/.bashrc && \
     echo "alias pip=pip3" >> $HOME/.bashrc
 
+# pytorch install(CPU)
+RUN pip3 install torch==1.9.1+cpu torchvision==0.10.1+cpu torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+RUN pip3 install pytorch_pretrained_bert
 
 WORKDIR /work
 

@@ -1,6 +1,6 @@
 transformers
 sentencepiece 
 pandas
-torch
+matplotlib
 fugashi
 ipadic

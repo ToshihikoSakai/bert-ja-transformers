@@ -25,10 +25,8 @@ def main():
     dir = os.getcwd()
 
     corpus = args[1]
-    # 絶対パスで記載
-
     outputdir = args[2]
-    # 絶対パスで記載
+
 
     # 事前学習用コーパスの準備
     # 1行に1文章となるようなテキストを準備する
